@@ -1,0 +1,63 @@
+<!-- templates/catshelter/cat_confirm_delete.html -->
+{% load static %}
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Confirm Delete Cat</title>
+    <style>
+        @import url('https://fonts.googleapis.com/css?family=Belleza');
+        @import url('https://fonts.googleapis.com/css?family=Inter');
+        .container {
+            max-width: 600px;
+            margin: 50px auto;
+            padding: 20px;
+            background-color: #ffffff;
+            border: 1px solid #ccc;
+            border-radius: 8px;
+            box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+        }
+        .confirmation {
+            text-align: center;
+            font-family: 'Inter', sans-serif;
+        }
+        .button-link {
+            display: inline-block;
+            padding: 10px 20px;
+            background-color: #007bff;
+            color: #fff;
+            text-align: center;
+            text-decoration: none;
+            border: none;
+            border-radius: 5px;
+            cursor: pointer;
+            font-family: Inter;
+            font-size: 16px;
+            font-weight: 600;
+            margin-top: 20px;
+            transition: background-color 0.3s ease;
+        }
+        .button-link:hover {
+            background-color: #0056b3;
+        }
+        .button-delete {
+            background-color: #dc3545;
+        }
+        .button-delete:hover {
+            background-color: #c82333;
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <div class="confirmation">
+            <h2>Are you sure you want to delete {{ cat.name }}?</h2>
+            <form method="post">
+                {% csrf_token %}
+                <button type="submit" class="button-link button-delete">Delete Cat</button>
+                <a href="{% url 'admin_catdetail' cat.id %}" class="button-link">Cancel</a>
+            </form>
+        </div>
+    </div>
+</body>
+</html>

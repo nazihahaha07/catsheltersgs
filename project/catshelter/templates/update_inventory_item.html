@@ -1,0 +1,113 @@
+{% load static %}
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Update Inventory Item</title>
+    <style>
+        body {
+            font-family: 'Inter', sans-serif;
+            background-image: url('{% static 'bg2.AVIF' %}');
+            margin: 0;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            color: #333;
+        }
+        .container {
+            margin-top:2%;
+            background: rgba(255, 255, 255, 0.95);
+            padding: 40px;
+            border-radius: 20px;
+            box-shadow: 0 15px 30px rgba(0, 0, 0, 0.1);
+            text-align: center;
+            width: 100%;
+            max-width: 600px;
+            box-sizing: border-box;
+            height:125%;
+        }
+        h1 {
+            font-size: 30px;
+            color: #007bff;
+            margin-bottom: 30px;
+        }
+        .inventory-form {
+            display: flex;
+            flex-direction: column;
+            gap: 20px;
+        }
+        .inventory-form label {
+            font-weight: bold;
+            font-size: 18px;
+            text-align: left;
+            margin-bottom: 5px;
+        }
+        .inventory-form input[type="text"],
+        .inventory-form input[type="number"],
+        .inventory-form input[type="decimal"],
+        .inventory-form textarea {
+            padding: 15px;
+            border: 1px solid #ccc;
+            border-radius: 10px;
+            font-size: 16px;
+            width: 100%;
+            box-sizing: border-box;
+            transition: border-color 0.3s ease;
+        }
+        .inventory-form input[type="text"]:focus,
+        .inventory-form input[type="number"]:focus,
+        .inventory-form input[type="decimal"]:focus,
+        .inventory-form textarea:focus {
+            border-color: #007bff;
+        }
+        .inventory-form input[type="submit"] {
+            padding: 15px;
+            background-color: #007bff;
+            color: #fff;
+            border: none;
+            border-radius: 12px;
+            cursor: pointer;
+            font-family: 'Inter', sans-serif;
+            font-size: 18px;
+            font-weight: 600;
+            transition: background-color 0.3s ease, transform 0.2s ease;
+            box-shadow: 0 4px 8px rgba(0, 123, 255, 0.2);
+        }
+        .inventory-form input[type="submit"]:hover {
+            background-color: #0056b3;
+            transform: scale(1.05);
+        }
+        .button-link {
+            display: inline-block;
+            padding: 12px 24px;
+            background-color: #555;
+            color: #fff;
+            text-align: center;
+            text-decoration: none;
+            border-radius: 12px;
+            cursor: pointer;
+            font-family: 'Inter', sans-serif;
+            font-size: 16px;
+            font-weight: 600;
+            transition: background-color 0.3s ease, transform 0.2s ease;
+            margin-top: 20px;
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+        }
+        .button-link:hover {
+            background-color: #333;
+            transform: scale(1.05);
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <h1>Update Inventory Item</h1>
+        <form method="post" class="inventory-form">
+            {% csrf_token %}
+            {{ form.as_p }}
+            <input type="submit" value="Update Item">
+        </form>
+        <a href="{% url 'admin_inventory' %}" class="button-link">Back to Inventory</a>
+    </div>
+</body>
+</html>

@@ -1,0 +1,383 @@
+{%load static%}
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Home Page</title>
+    <style>
+        @import url('https://fonts.googleapis.com/css?family=Belleza');
+        @import url('https://fonts.googleapis.com/css?family=Inter');
+        .head {
+            width: 100%;
+            background-color: #B99976;
+            height: 100px;
+            position: absolute;
+            left: 0;
+            top: 0;
+            z-index: -1;
+        }
+
+        .head h2{
+            width: 200px;
+            background-color: #B99976;
+            position: absolute;
+            top: 15px;
+            left: 46%;
+            font-family: 'Inter';
+            font-weight: lighter;
+            color: white;
+        }
+
+        .yellow {
+            color: #FFD006;
+        }
+
+        .timing {
+            display: flex;
+            position: relative;
+            left: 90%;
+            color: white;
+            font-family: 'Inter';
+        }
+
+        .timing #date{
+            width: 150px;
+            margin-top: 10px;
+            position: absolute;
+            top: 30px;
+            left: -15px;
+
+        }
+
+        #nav-container {
+            position: absolute;
+            height: 40vh;
+            width: 100%;
+            pointer-events: none;
+        }
+
+        #nav-container * {
+            visibility: visible;
+        }
+
+        .button {
+            position: relative;
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            border: 0;
+            background: transparent;
+            border-radius: 0;
+            height: 70px;
+            width: 30px;
+            cursor: pointer;
+            pointer-events: auto;
+            margin-left: 25px;
+            touch-action: manipulation;
+        }
+
+        .icon-bar {
+            display: block;
+            width: 70%;
+            height: 2px;
+            background: #ffffff;
+            transition: .3s;
+        }
+
+        .icon-bar + .icon-bar {
+            margin-top: 5px;
+        }
+
+        #nav-container:focus-within .button {
+            pointer-events: none;
+        }
+
+        #nav-container:focus-within .icon-bar:nth-of-type(1) {
+            transform: translate3d(0,6px,0) rotate(45deg);
+        }
+
+        #nav-container:focus-within .icon-bar:nth-of-type(2) {
+            opacity: 0;
+        }
+
+        #nav-container:focus-within .icon-bar:nth-of-type(3) {
+            transform: translate3d(0,-8px,0) rotate(-45deg);
+        }
+
+        #nav-content {
+            margin-top: 10px;
+            margin-left: 70px;
+            padding: 15px;
+            width: 90%;
+            max-width: 300px;
+            max-height: 300px;
+            border-radius: 0 20px;
+            position: absolute;
+            top: 0;
+            left: 0;
+            height: calc(100% - 50px);
+            background: #ececec;
+            font-family: 'Encode Sans Condensed';
+            pointer-events: auto;
+            transform: translateX(-300%);
+            transition: transform .3s;
+            will-change: transform;
+            contain: paint;
+            z-index: 950;
+            box-shadow: rgba(0, 0, 0, 0.263) -5px 10px 20px 10px;
+        }
+
+        #nav-content ul {
+            height: 100%;
+            flex-direction: column;
+        }
+
+        #nav-content li a {
+            font-family: 'Belleza';
+            padding: 10px 5px;
+            display: block;
+            text-transform: uppercase;
+            transition: color .1s;
+        }   
+
+        #nav-content li a:hover {
+            color: #FFD006;
+        }
+
+        #nav-content li:not(.small) + .small {
+            margin-top: auto;
+        }
+
+        .small {
+            display: flex;
+            align-self: center;
+        }
+
+        .small a {
+            font-size: 12px;
+            font-weight: 400;
+            color: #888;
+        }
+
+        .small a + a {
+            margin-left: 15px;
+        }
+
+        #nav-container:focus-within #nav-content {
+            transform: none;
+        }
+
+        * {
+            box-sizing: border-box;
+            margin: 0;
+            padding: 0;
+        }
+        a,
+        a:visited,
+        a:focus,
+        a:active,
+        a:link {
+            text-decoration: none;
+            outline: 0;
+        }
+        
+        a {
+            color: currentColor;
+            transition: .2s ease-in-out;
+        }
+        
+        h1, h2, h3, h4 {
+            margin: 0;
+        }
+        
+        #nav-content ul {
+            padding: 0;
+            list-style: none;
+        }
+        
+        img {
+            vertical-align: middle;
+            height: auto;
+            width: 100%;
+        }
+
+        * {
+            box-sizing:border-box
+        }
+
+        .content {
+            position: relative;
+            top: 160px;
+            width: 100%;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+        }
+
+        a {
+            text-decoration: none;
+        }
+
+        .shape {
+            width: 300px;
+            height: 400px;
+            background-color: #FFD006;
+            margin-left: 60px;
+            z-index: -1;
+        }
+
+        .shape img{
+            width: 300px;
+            height: 400px;
+        }
+
+        .shape img:hover{
+            transform: translate(30px,-30px);
+            transition: 800ms ease-in-out;
+        }
+
+        .shape p{
+            font-size: 30px;
+            font-family: 'Belleza';
+            text-decoration: none;
+            color: #111;
+            position: relative;
+            top: 0px;
+        }
+
+        .foot {
+            width: 100%;
+            background-color: #B99976;
+            height: 100px;
+            position: absolute;
+            left: 0;
+            bottom: -150px;
+            z-index: -1;
+        }
+
+        .foot h2{
+            width: 200px;
+            background-color: #B99976;
+            position: absolute;
+            top: 15px;
+            left: 46%;
+            font-family: 'Inter';
+            font-weight: lighter;
+            color: white;
+        }
+
+        .na {
+            margin-top: 10px;
+            margin-left: 630px;
+            font-size: 16px;
+            font-family: 'Inter';
+            color: #ececec;
+        }
+
+        .messages .success {
+            background-color: #4CAF50;
+            color: #FFF;
+            padding: 10px;
+        }
+
+        h2 {
+            font-size: 22px;
+        }
+
+       
+    </style>
+</head>
+<body style="background-image: url('{% static 'bg2.AVIF' %}');">
+    <div id="nav-container">
+        <div class="bg"></div>
+        <div class="button" tabindex="0">
+            <span class="icon-bar"></span>
+            <span class="icon-bar"></span>
+            <span class="icon-bar"></span>
+        </div>
+        <div id="nav-content" tabindex="0">
+            <ul>
+                <li><a href="{% url 'homepage' %}">Home</a></li>
+                <li><a href="{% url 'profile' %}">Profile</a></li>
+                <li><a href="{% url 'about_us' %}">About Us</a></li>
+                <li><a href="{% url 'login' %}">Log Out</a></li>
+            </ul>
+        </div>
+    </div>
+    <header>
+        <div class="head">
+            <h2><span class="yellow">SGS</span> CAT SHELTER</h2>
+            <div class="timing">
+                <div id="time"></div>
+                <div id="date"></div>
+            </div>
+            
+        </div>
+    </header>
+    <article>
+        <div class="content">
+            <a href="{% url 'cat_list' %}" onmouseover="bigImg(this)" onmouseout="normalImg(this)" id="link"> <!--letak link page-->
+                <div class="shape">
+                    {% load static %} <img src="{% static 'catprofile.jpg' %}" width="60px" height="60px"/>
+                    <!--{% load static %} <img src="{% static "news1.jpg" %}" width="60px" height="60px"/>-->
+                    <br>
+                    <p>Cat Profile</p>
+                </div>
+            </a>
+            <a href="{% url 'volunteer_application' %}" onmouseover="bigImg(this)" onmouseout="normalImg(this)" id="link">
+                <div class="shape">
+                    {% load static %} <img src="{% static 'volunteer.jpg' %}" width="60px" height="60px"/>
+                    <p>Volunteer</p>
+                </div>
+            </a>
+            <a href="{% url 'inventory' %}" onmouseover="bigImg(this)" onmouseout="normalImg(this)" id="link">
+                <div class="shape">
+                    {% load static %} <img src="{% static 'inventory.jpg' %}" width="60px" height="60px"/>
+                    <p>Inventory</p>
+                </div>
+            </a>
+        </div>
+    </article>
+    <footer>
+        <div class="foot">
+            <h2><span class="yellow">SGS</span> CAT SHELTER</h2>
+        </div>
+    </footer>
+</body>
+<script>
+function openNav()
+    {
+        document.getElementById("mySidenav").style.height = "100%";
+    }
+
+    function closeNav()
+    {
+        document.getElementById("mySidenav").style.height = "0";
+    }
+
+    const date = new Date()
+            const n_month = ["January","February","March","April","May","June","July","August","September","October","November","December"]
+
+            document.getElementById("date").innerHTML=date.getDate() + " " + n_month[date.getMonth()] + " " + date.getFullYear()
+            document.getElementById("time").innerHTML+= "<br>" + (date.getHours()) + ":" + (date.getMinutes()+1) + ":" + (date.getSeconds()+1)
+
+            function datetime()
+            {
+                var getdatetime = new Date()
+            }
+            function month()
+            {
+                var getdatetime = new Date()
+            }
+            function name_month()
+            {
+            const month = new Date()
+            }
+                function name_motnh()
+                {
+                    const month = new Date()
+                    const name_month = ["January","February","March","April","May","June","July","August","September","October","November","December"]
+                }
+</script>
+</html>

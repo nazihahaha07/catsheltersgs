@@ -1,0 +1,139 @@
+{% load static %}
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Update Cat Details</title>
+    <style>
+        @import url('https://fonts.googleapis.com/css2?family=Belleza&family=Inter:wght@400;600&display=swap');
+        
+        body {
+            font-family: 'Inter', sans-serif;
+            background-image: url('{% static 'bg2.AVIF' %}');
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            color: #333;
+        }
+
+        .container {
+            margin-top:1%;
+            background: rgba(255, 255, 255, 0.95);
+            padding: 40px;
+            border-radius: 20px;
+            box-shadow: 0 15px 30px rgba(0, 0, 0, 0.1);
+            text-align: center;
+            width: 100%;
+            max-width: 500px;
+            box-sizing: border-box;
+            height:118%;
+        }
+
+        h2 {
+            font-family: 'Inter', sans-serif;
+            font-size: 32px;
+            color: #007bff;
+            margin-bottom: 20px;
+            margin-top:-2%;
+        }
+
+        .form-group {
+            margin-bottom: 20px;
+            text-align: left;
+        }
+
+        .form-group label {
+            font-weight: bold;
+            font-size: 18px;
+            text-align: left;
+            margin-bottom: 5px;
+        }
+
+        .form-group input,
+        .form-group textarea,
+        .form-group select {
+            padding: 15px;
+            border: 1px solid #ccc;
+            border-radius: 10px;
+            font-size: 16px;
+            width: 100%;
+            box-sizing: border-box;
+            transition: border-color 0.3s ease;
+        }
+
+        .form-group input:focus,
+        .form-group textarea:focus,
+        .form-group select:focus {
+            border-color: #007bff;
+           
+        }
+
+        .form-group textarea {
+            resize: vertical;
+            height: 100px;
+        }
+
+        .button-submit,
+        .button-back {
+            display: inline-block;
+            padding: 12px 24px;
+            color: #fff;
+            text-align: center;
+            border: none;
+            border-radius: 12px;
+            cursor: pointer;
+            font-size: 16px;
+            font-weight: 600;
+            text-decoration: none;
+            transition: background-color 0.3s ease, transform 0.2s ease;
+            margin-top: 10px;
+            box-shadow: 0 4px 8px rgba(0, 123, 255, 0.2);
+        }
+
+        .button-submit {
+            background-color: #007bff;
+        }
+
+        .button-submit:hover {
+            background-color: #0056b3;
+            transform: scale(1.05);
+        }
+
+        .button-back {
+            background-color: #6c757d;
+            margin-left: 10px;
+        }
+
+        .button-back:hover {
+            background-color: #5a6268;
+            transform: scale(1.05);
+        }
+
+        @media (max-width: 600px) {
+            .container {
+                padding: 20px;
+            }
+
+            h2 {
+                font-size: 24px;
+            }
+
+            .button-submit,
+            .button-back {
+                font-size: 14px;
+            }
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <h2>Update Cat Details</h2>
+        <form method="post" enctype="multipart/form-data">
+            {% csrf_token %}
+            {{ form.as_p }}
+            <button type="submit" class="button-submit">Update Cat</button>
+        </form>
+        <a href="{% url 'admin_catlist' %}" class="button-back">Back to Cat Detail</a>
+    </div>
+</body>
+</html>

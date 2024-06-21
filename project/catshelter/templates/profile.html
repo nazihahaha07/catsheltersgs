@@ -1,0 +1,425 @@
+{%load static%}
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>User Profile</title>
+    <style>
+        @import url('https://fonts.googleapis.com/css?family=Belleza');
+        @import url('https://fonts.googleapis.com/css?family=Inter');
+        .head {
+            width: 100%;
+            background-color: #B99976;
+            height: 80px;
+            position: fixed;
+            left: 0;
+            top: 0;
+            z-index: 2;
+        }
+
+        .head h2{
+            width: 200px;
+            background-color: #B99976;
+            position: absolute;
+            top: 20px;
+            left: 46%;
+            font-family: 'Inter';
+            font-weight: lighter;
+            color: white;
+        }
+
+        .yellow {
+            color: #FFD006;
+        }
+
+        body {
+            font-family: 'Inter', sans-serif;
+            background-color: #f5f5f5;
+            color: #333;
+        }
+
+        #nav-container {
+            position: absolute;
+            height: 40vh;
+            width: 100%;
+            pointer-events: none;
+        }
+
+        #nav-container * {
+            visibility: visible;
+        }
+
+        .button {
+            position: relative;
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            border: 0;
+            background: transparent;
+            border-radius: 0;
+            height: 70px;
+            width: 30px;
+            cursor: pointer;
+            pointer-events: auto;
+            margin-left: 25px;
+            touch-action: manipulation;
+        }
+
+        .icon-bar {
+            display: block;
+            width: 70%;
+            height: 2px;
+            background: #ffffff;
+            transition: .3s;
+        }
+
+        .icon-bar + .icon-bar {
+            margin-top: 5px;
+        }
+
+        #nav-container:focus-within .button {
+            pointer-events: none;
+        }
+
+        #nav-container:focus-within .icon-bar:nth-of-type(1) {
+            transform: translate3d(0,6px,0) rotate(45deg);
+        }
+
+        #nav-container:focus-within .icon-bar:nth-of-type(2) {
+            opacity: 0;
+        }
+
+        #nav-container:focus-within .icon-bar:nth-of-type(3) {
+            transform: translate3d(0,-8px,0) rotate(-45deg);
+        }
+
+        #nav-content {
+            margin-top: 10px;
+            margin-left: 70px;
+            padding: 15px;
+            width: 90%;
+            max-width: 300px;
+            max-height: 300px;
+            border-radius: 0 20px;
+            position: absolute;
+            top: 0;
+            left: 0;
+            height: calc(100% - 70px);
+            background: #ececec;
+            font-family: 'Encode Sans Condensed';
+            pointer-events: auto;
+            transform: translateX(-300%);
+            transition: transform .3s;
+            will-change: transform;
+            contain: paint;
+            z-index: 950;
+            box-shadow: rgba(0, 0, 0, 0.263) -5px 10px 20px 10px;
+        }
+
+        #nav-content ul {
+            height: 100%;
+            flex-direction: column;
+            display: flex;
+            flex-direction: column;
+            height: 100%;
+        }
+
+        #nav-content li a {
+            font-family: 'Belleza';
+            padding: 10px 5px;
+            display: block;
+            text-transform: uppercase;
+            transition: color .1s;
+        }   
+
+        #nav-content li a:hover {
+            color: #FFD006;
+        }
+
+        #nav-content li:not(.small) + .small {
+            margin-top: auto;
+        }
+
+        .small {
+            display: flex;
+            align-self: center;
+        }
+
+        .small a {
+            font-size: 12px;
+            font-weight: 400;
+            color: #888;
+        }
+
+        .small a + a {
+            margin-left: 15px;
+        }
+
+        #nav-container:focus-within #nav-content {
+            transform: none;
+        }
+
+        * {
+            box-sizing: border-box;
+            margin: 0;
+            padding: 0;
+        }
+        a,
+        a:visited,
+        a:focus,
+        a:active,
+        a:link {
+            text-decoration: none;
+            outline: 0;
+        }
+        
+        a {
+            color: currentColor;
+            transition: .2s ease-in-out;
+        }
+        
+        h1, h2, h3, h4 {
+            margin: 0;
+        }
+        
+        #nav-content ul {
+            padding: 0;
+            list-style: none;
+        }
+
+        .image img{
+            width: 100%;
+            height: 500px;
+            z-index: -1;
+        }
+
+        .image h1{
+            position: absolute;
+            top: 250px;
+            left: 50px;
+            font-size: 60px;
+            font-family: 'Inter';
+            font-weight: 800;
+            color: white;
+        }
+
+        .image p{
+            position: absolute;
+            top: 340px;
+            left: 50px;
+            font-size: 20px;
+            font-family: 'Inter';
+            font-weight: lighter;
+            color: #fade5f;
+        }
+
+        .foot {
+            width: 100%;
+            background-color: #B99976;
+            height: 100px;
+            position: relative;
+            left: 0;
+            bottom: 0;
+            z-index: -1;
+        }
+
+        .foot h2{
+            width: 200px;
+            background-color: #B99976;
+            position: absolute;
+            top: 15px;
+            left: 46%;
+            font-family: 'Inter';
+            font-weight: lighter;
+            color: white;
+        }
+
+        .note {
+            font-family: 'Inter';
+            font-size: 20px;
+            margin-left: 20px;
+        }
+
+        .note img{
+            margin-top: 10px;
+            border: 3px solid #B99976;
+            border-radius: 5px;
+            padding: 10px;
+            margin-left: 450px;
+        }
+
+        .note h1{
+            margin-top: 50px;
+        }
+
+        p {
+            margin-left: 100px;
+            margin-right: 100px;
+        }
+
+        .text {
+            margin-left: 100px;
+            margin-right: 100px;
+        }
+
+        .na {
+            margin-left: 100px;
+            margin-right: 100px;
+        }
+
+        .button-link {
+            display: inline-block;
+            padding: 10px 20px;
+            background-color: #007bff; /* Change the background color to your desired color */
+            color: #fff; /* Text color */
+            text-align: center;
+            text-decoration: none;
+            border: none;
+            border-radius: 5px; /* Add rounded corners */
+            cursor: pointer;
+            font-family: 'Poppins', sans-serif;
+            font-size: 16px;
+            font-weight: 600;
+            margin-left: 100px;
+            margin-bottom: 50px;
+        }
+
+        /* Optional: Add hover effect */
+        .button-link:hover {
+            background-color: #0056b3; /* Change color on hover */
+        }
+
+        .button-container{
+            display: flex;
+        }
+        
+        body {
+            font-family: 'Inter', sans-serif;
+            background-color: #f0f0f0;
+            background-size: 50%;
+            background-position: center;
+        }
+
+        .container {
+            max-width: 500px;
+            margin: 150px auto 20px;
+            padding: 20px;
+            background-color: #fff;
+            border: 1px solid #ccc;
+            border-radius: 8px;
+            box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+            height: 300px;
+        }
+
+        h1 {
+            font-size: 24px;
+            margin-bottom: 20px;
+        }
+
+        p {
+            font-size: 16px;
+            margin: 10px 0;
+        }
+
+        a {
+            text-decoration: none;
+            color: #004AAD;
+            font-weight: bold;
+        }
+
+        a:hover {
+            color: #002B6F;
+        }
+
+        button {
+            background-color: #FF0000;
+            color: #fff;
+            border: none;
+            border-radius: 4px;
+            padding: 10px 20px;
+            cursor: pointer;
+            margin-top: 0px;
+            margin-left: 0px;
+        }
+
+        button:hover {
+            background-color: #FF3333;
+        }
+
+        .button-link {
+            padding: 10px 20px;
+            background-color: #007bff; /* Change the background color to your desired color */
+            color: #fff; /* Text color */
+            border: none;
+            border-radius: 4px; /* Add rounded corners */
+            cursor: pointer;
+            margin-bottom: px;
+            margin-left: 0px;
+        }
+
+        /* Optional: Add hover effect */
+        .button-link:hover {
+            background-color: #0056b3; /* Change color on hover */
+        }
+
+        h2 {
+            font-size: 22px;
+        }
+        ul {
+            list-style: none;
+            padding: 0;
+        }
+
+        li {
+            margin: px 0;
+            font-size: 16px;
+        }
+
+        li a {
+            text-decoration: none;
+            color: black;
+            transition: color 0.3s ease;
+        }
+
+        li a:hover {
+            color: #0056b3;
+        }
+    </style>
+</head>
+<body style="background-image: url('{% static 'home.JPG' %}');">
+    <header>
+        <div class="head">
+            <div id="nav-container">
+                <div class="bg"></div>
+                <div class="button" tabindex="0">
+                    <span class="icon-bar"></span>
+                    <span class="icon-bar"></span>
+                    <span class="icon-bar"></span>
+                </div>
+                <div id="nav-content" tabindex="0">
+                    <ul>
+                        <li><a href="{% url 'homepage' %}">Home</a></li>
+                        <li><a href="{% url 'profile' %}">Profile</a></li>
+                        <li><a href="{% url 'login' %}">Log Out</a></li>
+                    </ul>
+                </div>
+            </div>
+            <h2><span class="yellow">SGS</span> CAT SHELTER</h2>
+        </div>
+    </header>
+    <article>
+        <div class="container">
+            <h1>User Profile</h1>
+            <p>Full Name: {{ user.userfullname }}</p>
+            <p>Phone Number: {{ user.userphone }}</p>
+            <p>Email: {{ user.useremail }}</p>
+            <p>Username: {{ login.username }}</p>
+            <p>Password: {{ login.password }}</p>
+            <br>
+            <a href="{% url 'editprofile' %}" class="button-link">Edit Profile</a>
+
+
+        </div>
+    </article>
+</body>
+</html>

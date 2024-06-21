@@ -1,0 +1,353 @@
+<!-- templates/catshelter/add_cat.html -->
+{% load static %}
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Add New Cat</title>
+    <style>
+        @import url('https://fonts.googleapis.com/css?family=Belleza');
+        @import url('https://fonts.googleapis.com/css?family=Inter');
+        .head {
+            width: 100%;
+            background-color: #B99976;
+            height: 100px;
+            position: absolute;
+            left: 0;
+            top: 0;
+            z-index: -1;
+        }
+
+        .head h2{
+            width: 200px;
+            background-color: #B99976;
+            position: absolute;
+            top: 15px;
+            left: 46%;
+            font-family: 'Inter';
+            font-weight: lighter;
+            color: white;
+        }
+
+        .yellow {
+            color: #FFD006;
+        }
+
+        .timing {
+            display: flex;
+            position: relative;
+            left: 90%;
+            color: white;
+            font-family: 'Inter';
+        }
+
+        .timing #date{
+            width: 150px;
+            margin-top: 10px;
+            position: absolute;
+            top: 30px;
+            left: -15px;
+
+        }
+
+        #nav-container {
+            position: absolute;
+            height: 40vh;
+            width: 100%;
+            pointer-events: none;
+        }
+
+        #nav-container * {
+            visibility: visible;
+        }
+
+        .button {
+            position: relative;
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            border: 0;
+            background: transparent;
+            border-radius: 0;
+            height: 70px;
+            width: 30px;
+            cursor: pointer;
+            pointer-events: auto;
+            margin-left: 25px;
+            touch-action: manipulation;
+        }
+
+        .icon-bar {
+            display: block;
+            width: 70%;
+            height: 2px;
+            background: #ffffff;
+            transition: .3s;
+        }
+
+        .icon-bar + .icon-bar {
+            margin-top: 5px;
+        }
+
+        #nav-container:focus-within .button {
+            pointer-events: none;
+        }
+
+        #nav-container:focus-within .icon-bar:nth-of-type(1) {
+            transform: translate3d(0,6px,0) rotate(45deg);
+        }
+
+        #nav-container:focus-within .icon-bar:nth-of-type(2) {
+            opacity: 0;
+        }
+
+        #nav-container:focus-within .icon-bar:nth-of-type(3) {
+            transform: translate3d(0,-8px,0) rotate(-45deg);
+        }
+
+        #nav-content {
+            margin-top: 10px;
+            margin-left: 70px;
+            padding: 15px;
+            width: 90%;
+            max-width: 300px;
+            max-height: 300px;
+            border-radius: 0 20px;
+            position: absolute;
+            top: 0;
+            left: 0;
+            height: calc(100% - 70px);
+            background: #ececec;
+            font-family: 'Encode Sans Condensed';
+            pointer-events: auto;
+            transform: translateX(-300%);
+            transition: transform .3s;
+            will-change: transform;
+            contain: paint;
+            z-index: 950;
+            box-shadow: rgba(0, 0, 0, 0.263) -5px 10px 20px 10px;
+        }
+
+        #nav-content ul {
+            height: 100%;
+            flex-direction: column;
+        }
+
+        #nav-content li a {
+            font-family: 'Belleza';
+            padding: 10px 5px;
+            display: block;
+            text-transform: uppercase;
+            transition: color .1s;
+        }   
+
+        #nav-content li a:hover {
+            color: #FFD006;
+        }
+
+        #nav-content li:not(.small) + .small {
+            margin-top: auto;
+        }
+
+        .small {
+            display: flex;
+            align-self: center;
+        }
+
+        .small a {
+            font-size: 12px;
+            font-weight: 400;
+            color: #888;
+        }
+
+        .small a + a {
+            margin-left: 15px;
+        }
+
+        #nav-container:focus-within #nav-content {
+            transform: none;
+        }
+
+        * {
+            box-sizing: border-box;
+            margin: 0;
+            padding: 0;
+        }
+        a,
+        a:visited,
+        a:focus,
+        a:active,
+        a:link {
+            text-decoration: none;
+            outline: 0;
+        }
+        
+        a {
+            color: currentColor;
+            transition: .2s ease-in-out;
+        }
+        
+        h1, h2, h3, h4 {
+            margin: 0;
+        }
+        
+        #nav-content ul {
+            padding: 0;
+            list-style: none;
+        }
+        
+        img {
+            vertical-align: middle;
+            height: auto;
+            width: 100%;
+        }
+
+        * {
+            box-sizing:border-box
+        }
+
+        .content {
+            position: relative;
+            top: 160px;
+            width: 100%;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+        }
+
+        a {
+            text-decoration: none;
+        }
+
+        .shape {
+            width: 300px;
+            height: 400px;
+            background-color: #FFD006;
+            margin-left: 60px;
+            z-index: -1;
+        }
+
+        .shape img{
+            width: 300px;
+            height: 400px;
+        }
+
+        .shape img:hover{
+            transform: translate(30px,-30px);
+            transition: 800ms ease-in-out;
+        }
+
+        .shape p{
+            font-size: 30px;
+            font-family: 'Belleza';
+            text-decoration: none;
+            color: #111;
+            position: relative;
+            top: 0px;
+        }
+
+        .foot {
+            width: 100%;
+            background-color: #B99976;
+            height: 100px;
+            position: absolute;
+            left: 0;
+            bottom: -150px;
+            z-index: -1;
+        }
+
+        .foot h2{
+            width: 200px;
+            background-color: #B99976;
+            position: absolute;
+            top: 15px;
+            left: 46%;
+            font-family: 'Inter';
+            font-weight: lighter;
+            color: white;
+        }
+
+        .na {
+            margin-top: 10px;
+            margin-left: 630px;
+            font-size: 16px;
+            font-family: 'Inter';
+            color: #ececec;
+        }
+
+        .messages .success {
+            background-color: #4CAF50;
+            color: #FFF;
+            padding: 10px;
+        }
+
+        h2 {
+            font-size: 22px;
+        }
+        @import url('https://fonts.googleapis.com/css?family=Belleza');
+        @import url('https://fonts.googleapis.com/css?family=Inter');
+        .container {
+            max-width: 500px;
+            margin: auto;
+            padding: 20px;
+            background-color: #ececec;
+            border: 1px solid #ccc;
+            border-radius: 8px;
+            box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+            margin-top: 50px;
+        }
+
+        .form-group {
+            margin-bottom: 15px;
+        }
+
+        label {
+            display: block;
+            margin-bottom: 5px;
+            font-weight: bold;
+        }
+
+        input, textarea {
+            width: 100%;
+            padding: 8px;
+            margin-top: 5px;
+            margin-bottom: 10px;
+            border: 1px solid #ccc;
+            border-radius: 4px;
+        }
+
+        button {
+            padding: 10px 20px;
+            background-color: #007bff;
+            color: #fff;
+            border: none;
+            border-radius: 5px;
+            cursor: pointer;
+        }
+
+        button:hover {
+            background-color: #0056b3;
+        }
+
+        body {
+            background-size: 100%%; 
+            /* Adjust to fit the whole screen */
+            background-position: center;
+            /* Center the background image */
+        }
+    </style>
+</head>
+<body style="background-image: url('{% static 'bg.PNG' %}');">
+    <div class="container">
+        <h1>Add New Cat</h1>
+        <br>
+        <form method="post" enctype="multipart/form-data">
+            {% csrf_token %}
+            {{ cat_form.as_p }}
+            <button type="submit">Add Cat</button>
+        </form>
+    </div>
+    <br>
+    <br>
+</body>
+</html>

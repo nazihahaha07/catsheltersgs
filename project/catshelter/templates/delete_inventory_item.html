@@ -1,0 +1,91 @@
+{% load static %}
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Delete Inventory Item</title>
+    <style>
+        body {
+            font-family: 'Inter', sans-serif;
+            background-image: url('{% static 'bg2.AVIF' %}');
+            background-size: cover;
+            background-position: center;
+            margin: 0;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            height: 100vh;
+            color: #333;
+        }
+        .container {
+            background: rgba(255, 255, 255, 0.95);
+            padding: 40px;
+            border-radius: 20px;
+            box-shadow: 0 15px 30px rgba(0, 0, 0, 0.1);
+            text-align: center;
+            width: 100%;
+            max-width: 400px;
+            box-sizing: border-box;
+        }
+        h1 {
+            font-size: 36px;
+            color: #dc3545;
+            margin-bottom: 30px;
+        }
+        .confirm-text {
+            font-size: 18px;
+            margin-bottom: 20px;
+        }
+        .button-link {
+            display: inline-block;
+            padding: 12px 24px;
+            background-color: #007bff;
+            color: #fff;
+            text-align: center;
+            text-decoration: none;
+            border-radius: 12px;
+            cursor: pointer;
+            font-family: 'Inter', sans-serif;
+            font-size: 16px;
+            font-weight: 600;
+            transition: background-color 0.3s ease, transform 0.2s ease;
+            margin-top: 20px;
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+        }
+        .button-link:hover {
+            background-color: #0056b3;
+            transform: scale(1.05);
+        }
+        .delete-button {
+            padding: 15px 30px;
+            background-color: #dc3545;
+            color: #fff;
+            text-align: center;
+            text-decoration: none;
+            border-radius: 12px;
+            cursor: pointer;
+            font-family: 'Inter', sans-serif;
+            font-size: 16px;
+            font-weight: 600;
+            transition: background-color 0.3s ease, transform 0.2s ease;
+            margin-top: 20px;
+            box-shadow: 0 4px 8px rgba(220, 53, 69, 0.2);
+        }
+        .delete-button:hover {
+            background-color: #c82333;
+            transform: scale(1.05);
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <h1>Delete Inventory Item</h1>
+        <p class="confirm-text">Are you sure you want to delete "{{ inventory_item.item_name }}"?</p>
+        <form method="post" style="display:inline;">
+            {% csrf_token %}
+            <button type="submit" class="delete-button">Yes, Delete</button>
+        </form>
+        <a href="{% url 'admin_inventory' %}" class="button-link">Cancel</a>
+    </div>
+</body>
+</html>

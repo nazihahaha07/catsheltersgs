@@ -1,0 +1,273 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Edit Profile</title>
+    <style>
+        @import url('https://fonts.googleapis.com/css?family=Belleza|Inter:400,600&display=swap');
+
+        body {
+            font-family: 'Inter', sans-serif;
+            background-color: #f9f9f9;
+            color: #333;
+        }
+
+        .head {
+            width: 100%;
+            background-color: #B99976;
+            height: 80px;
+            position: fixed;
+            left: 0;
+            top: 0;
+            z-index: 2;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
+
+        .head h2 {
+            font-family: 'Inter', sans-serif;
+            font-weight: 400;
+            color: white;
+        }
+
+        .yellow {
+            color: #FFD006;
+        }
+
+        #nav-container {
+            position: absolute;
+            height: 40vh;
+            width: 100%;
+            pointer-events: none;
+        }
+
+        #nav-container * {
+            visibility: visible;
+        }
+
+        .button {
+            position: relative;
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            border: 0;
+            background: transparent;
+            height: 70px;
+            width: 30px;
+            cursor: pointer;
+            pointer-events: auto;
+            margin-left: 25px;
+        }
+
+        .icon-bar {
+            display: block;
+            width: 70%;
+            height: 2px;
+            background: #ffffff;
+            transition: .3s;
+        }
+
+        .icon-bar + .icon-bar {
+            margin-top: 5px;
+        }
+
+        #nav-container:focus-within .button {
+            pointer-events: none;
+        }
+
+        #nav-container:focus-within .icon-bar:nth-of-type(1) {
+            transform: translate3d(0,6px,0) rotate(45deg);
+        }
+
+        #nav-container:focus-within .icon-bar:nth-of-type(2) {
+            opacity: 0;
+        }
+
+        #nav-container:focus-within .icon-bar:nth-of-type(3) {
+            transform: translate3d(0,-8px,0) rotate(-45deg);
+        }
+
+        #nav-content {
+            margin-top: 10px;
+            margin-left: 70px;
+            padding: 15px;
+            width: 90%;
+            max-width: 300px;
+            max-height: 300px;
+            border-radius: 0 20px;
+            position: absolute;
+            top: 0;
+            left: 0;
+            height: calc(100% - 70px);
+            background: #ececec;
+            font-family: 'Belleza', sans-serif;
+            pointer-events: auto;
+            transform: translateX(-300%);
+            transition: transform .3s;
+            z-index: 950;
+            box-shadow: rgba(0, 0, 0, 0.263) -5px 10px 20px 10px;
+        }
+
+        #nav-content ul {
+            height: 100%;
+            flex-direction: column;
+        }
+
+        #nav-content li a {
+            font-family: 'Belleza', sans-serif;
+            padding: 10px 5px;
+            display: block;
+            text-transform: uppercase;
+            transition: color .1s;
+        }
+
+        #nav-content li a:hover {
+            color: #FFD006;
+        }
+
+        #nav-content li:not(.small) + .small {
+            margin-top: auto;
+        }
+
+        .small {
+            display: flex;
+            align-self: center;
+        }
+
+        .small a {
+            font-size: 12px;
+            font-weight: 400;
+            color: #888;
+        }
+
+        .small a + a {
+            margin-left: 15px;
+        }
+
+        #nav-container:focus-within #nav-content {
+            transform: none;
+        }
+
+        * {
+            box-sizing: border-box;
+            margin: 0;
+            padding: 0;
+        }
+
+        a,
+        a:visited,
+        a:focus,
+        a:active,
+        a:link {
+            text-decoration: none;
+            outline: 0;
+        }
+
+        a {
+            color: currentColor;
+            transition: .2s ease-in-out;
+        }
+
+        h1, h2, h3, h4 {
+            margin: 0;
+        }
+
+        #nav-content ul {
+            padding: 0;
+            list-style: none;
+        }
+
+        .container {
+            max-width: 600px;
+            margin: auto;
+            padding: 20px;
+            background-color: #fff;
+            border: 1px solid #ccc;
+            border-radius: 8px;
+            box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+            margin-top: 150px;
+        }
+
+        h1 {
+            font-family: 'Belleza', sans-serif;
+            font-size: 24px;
+            margin-bottom: 20px;
+            color: #333;
+        }
+
+        label {
+            font-size: 16px;
+            color: #555;
+        }
+
+        input {
+            font-size: 16px;
+            width: 100%;
+            padding: 10px;
+            margin: 5px 0;
+            border: 1px solid #ccc;
+            border-radius: 4px;
+        }
+
+        button {
+            background-color: #007bff;
+            color: #fff;
+            border: none;
+            border-radius: 5px;
+            padding: 10px 20px;
+            cursor: pointer;
+            font-family: 'Inter', sans-serif;
+            font-size: 16px;
+            font-weight: 600;
+            margin-top: 20px;
+        }
+
+        button:hover {
+            background-color: #0056b3;
+        }
+
+        h2 {
+            font-family: 'Inter', sans-serif;
+            font-size: 22px;
+        }
+    </style>
+</head>
+<body>
+    <header>
+        <div class="head">
+            <div id="nav-container">
+                <div class="bg"></div>
+                <div class="button" tabindex="0">
+                    <span class="icon-bar"></span>
+                    <span class="icon-bar"></span>
+                    <span class="icon-bar"></span>
+                </div>
+                <div id="nav-content" tabindex="0">
+                    <ul>
+                        <li><a href="{% url 'homepage' %}">Home</a></li>
+                        <li><a href="{% url 'profile' %}">Profile</a></li>
+                        <li><a href="{% url 'login' %}">Log Out</a></li>
+                    </ul>
+                </div>
+            </div>
+            <h2><span class="yellow">SGS</span> CAT SHELTER</h2>
+        </div>
+    </header>
+    <article>
+        <div class="container">
+            <h1>Edit Profile</h1>
+            <form method="post" action="{% url 'save_profile_changes' %}">
+                {% csrf_token %}
+                <label for="email">Email:</label>
+                <input type="text" id="email" name="email" value="{{ user.useremail }}" required>
+
+                <label for="phone">Phone:</label>
+                <input type="text" id="phone" name="phone" value="{{ user.userphone }}" required>
+
+                <button type="submit">Save Changes</button>
+            </form>
+        </div>
+    </article>
+</body>
+</html>

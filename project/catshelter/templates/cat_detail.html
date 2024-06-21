@@ -1,0 +1,101 @@
+<!-- templates/catshelter/cat_detail.html -->
+{% load static %}
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>{{ cat.name }} Details</title>
+    <style>
+        @import url('https://fonts.googleapis.com/css?family=Belleza');
+        @import url('https://fonts.googleapis.com/css?family=Inter');
+        .container {
+            max-width: 600px;
+            margin: 100px auto;
+            padding: 20px;
+            background-color: #ffffff;
+            border: 1px solid #ccc;
+            border-radius: 8px;
+            box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+        }
+        .cat-box {
+            background-color: #ececec;
+            padding: 20px;
+            margin-bottom: 20px;
+            border-radius: 8px;
+            box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+        }
+        .cat-name {
+            font-size: 24px;
+            margin-bottom: 10px;
+            font-family: 'Belleza', sans-serif;
+        }
+        .cat-details {
+            font-size: 18px;
+            color: #666;
+        }
+        .cat-image {
+            margin-left: 26%;
+            max-width: 50%;
+            height: auto;
+            margin-bottom: 20px;
+            border-radius: 8px;
+        }
+        .button-link {
+            display: inline-block;
+            padding: 10px 20px;
+            background-color: #007bff;
+            color: #fff;
+            text-align: center;
+            text-decoration: none;
+            border: none;
+            border-radius: 5px;
+            cursor: pointer;
+            font-family: Inter;
+            font-size: 16px;
+            font-weight: 600;
+            margin-top: 20px;
+            transition: background-color 0.3s ease;
+        }
+        .button-link:hover {
+            background-color: #0056b3;
+        }
+        .button-link2 {
+            display: inline-block;
+            padding: 10px 20px;
+            background-color: red;
+            color: white;
+            text-align: center;
+            text-decoration: none;
+            border: none;
+            border-radius: 5px;
+            cursor: pointer;
+            font-family: Inter;
+            font-size: 16px;
+            font-weight: 600;
+            margin-top: 20px;
+            transition: background-color 0.3s ease;
+        }
+        .button-link2:hover {
+            background-color: #9c0606;
+        }
+        p {
+            font-family: Inter;
+        }
+    </style>
+</head>
+<body style="background-image: url('{% static 'bg2.AVIF' %}');">
+    <div class="container">
+        <div class="cat-box">
+            <h2 class="cat-name">{{ cat.name }}</h2>
+            {% if cat.image %}
+                <img src="{{ cat.image.url }}" alt="{{ cat.name }}" class="cat-image">
+            {% endif %}
+            <p class="cat-details"><strong>Age:</strong> {{ cat.age }}</p>
+            <p class="cat-details"><strong>Breed:</strong> {{ cat.breed }}</p>
+            <p class="cat-details"><strong>Description:</strong> {{ cat.description }}</p>
+        </div>
+        <a href="{% url 'cat_list' %}" class="button-link">Back to Cat List</a>
+        <a href="{% url 'report_cat' cat.id %}" class="button-link2">Report</a>
+    </div>
+</body>
+</html>

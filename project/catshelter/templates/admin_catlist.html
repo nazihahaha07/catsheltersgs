@@ -1,0 +1,314 @@
+{% load static %}
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Cat List</title>
+    <style>
+        @import url('https://fonts.googleapis.com/css?family=Belleza');
+        @import url('https://fonts.googleapis.com/css?family=Inter');
+        .yellow {
+            color: #FFD006;
+        }
+        :root {
+            --primary-color: #B99976;
+            --secondary-color: #FFD006;
+            --background-color: #f7f7f7;
+            --font-family: 'Inter', sans-serif;
+            --font-size: 16px;
+            --line-height: 1.5;
+        }
+
+        body {
+            font-family: var(--font-family);
+            font-size: var(--font-size);
+            line-height: var(--line-height);
+            background-color: var(--background-color);
+            margin: 0;
+            padding: 0;
+            background-size: 50%;
+            background-position: center;
+        }
+
+        .head, .foot {
+            width: 100%;
+            background-color: var(--primary-color);
+            height: 100px;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+        }
+
+        .head h2, .foot h2 {
+            font-family: var(--font-family);
+            font-weight: lighter;
+            color: white;
+        }
+
+        .timing {
+            position: absolute;
+            top: 10px;
+            right: 20px;
+            color: white;
+            font-family: var(--font-family);
+        }
+
+        .container2 {
+            max-width: 600px; /* Increased max-width for larger content */
+            margin: 50px auto;
+            padding: 20px;
+            background-color: #ffffff;
+            border: 1px solid #ccc;
+            border-radius: 8px;
+            box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+            margin-top: 80px;
+        }
+
+        .cat-box {
+            background-color: #ececec;
+            padding: 20px;
+            margin-bottom: 20px;
+            border-radius: 8px;
+            box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+        }
+
+        .cat-name {
+            font-size: 24px;
+            margin-bottom: 10px;
+            font-family: 'Belleza', sans-serif;
+        }
+
+        .cat-details {
+            font-size: 18px;
+            color: #666;
+        }
+
+        .button-link {
+            display: inline-block;
+            padding: 10px 20px;
+            background-color: #007bff;
+            color: #fff;
+            text-align: center;
+            text-decoration: none;
+            border: none;
+            border-radius: 5px;
+            cursor: pointer;
+            font-family: var(--font-family);
+            font-size: 16px;
+            font-weight: 600;
+            margin-top: 20px;
+            transition: background-color 0.3s ease;
+        }
+
+        .button-link:hover {
+            background-color: #0056b3;
+        }
+
+        ul {
+            list-style: none;
+            padding: 0;
+        }
+
+        li {
+            margin: 10px 0;
+            font-size: 18px;
+        }
+
+        li a {
+            text-decoration: none;
+            color: black;
+            transition: color 0.3s ease;
+        }
+
+        li a:hover {
+            color: #0056b3;
+        }
+
+        #nav-container {
+            position: absolute;
+            height: 40vh;
+            width: 100%;
+            pointer-events: none;
+        }
+
+        #nav-container * {
+            visibility: visible;
+        }
+
+        .button {
+            position: relative;
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            border: 0;
+            background: transparent;
+            border-radius: 0;
+            height: 70px;
+            width: 30px;
+            cursor: pointer;
+            pointer-events: auto;
+            margin-left: 25px;
+            touch-action: manipulation;
+        }
+
+        .icon-bar {
+            display: block;
+            width: 70%;
+            height: 2px;
+            background: #ffffff;
+            transition: .3s;
+        }
+
+        .icon-bar + .icon-bar {
+            margin-top: 5px;
+        }
+
+        #nav-container:focus-within .button {
+            pointer-events: none;
+        }
+
+        #nav-container:focus-within .icon-bar:nth-of-type(1) {
+            transform: translate3d(0,6px,0) rotate(45deg);
+        }
+
+        #nav-container:focus-within .icon-bar:nth-of-type(2) {
+            opacity: 0;
+        }
+
+        #nav-container:focus-within .icon-bar:nth-of-type(3) {
+            transform: translate3d(0,-8px,0) rotate(-45deg);
+        }
+
+        #nav-content {
+            margin-top: 10px;
+            margin-left: 70px;
+            padding: 10px;
+            width: 90%;
+            max-width: 300px;
+            max-height: 300px;
+            border-radius: 0 20px;
+            position: absolute;
+            top: 0;
+            left: 0;
+            height: calc(100% - 50px);
+            background: #ececec;
+            font-family: 'Encode Sans Condensed';
+            pointer-events: auto;
+            transform: translateX(-300%);
+            transition: transform .3s;
+            will-change: transform;
+            contain: paint;
+            z-index: 950;
+            box-shadow: rgba(0, 0, 0, 0.263) -5px 10px 20px 10px;
+            text-color: black;
+        }
+
+        #nav-content ul {
+            height: 100%;
+            flex-direction: column;
+        }
+
+        #nav-content li a {
+            font-family: 'Belleza';
+            padding: 10px 2px;
+            display: block;
+            text-transform: uppercase;
+            transition: color .1s;
+            font-size: 16px;
+        }   
+
+        #nav-content li a:hover {
+            color: var(--secondary-color);
+        }
+
+        #nav-content li:not(.small) + .small {
+            margin-top: auto;
+        }
+
+        .small {
+            display: flex;
+            align-self: center;
+        }
+
+        .small a {
+            font-size: 12px;
+            font-weight: 400;
+            color: #888;
+        }
+
+        .small a + a {
+            margin-left: 15px;
+        }
+
+        #nav-container:focus-within #nav-content {
+            transform: none;
+        }
+
+        * {
+            box-sizing: border-box;
+            margin: 0;
+            padding: 0;
+        }
+        a,
+        a:visited,
+        a:focus,
+        a:active,
+        a:link {
+            text-decoration: none;
+            outline: 0;
+        }
+        
+        a {
+            color: currentColor;
+            transition: .2s ease-in-out;
+        }
+        
+        h1, h2, h3, h4 {
+            margin: 0;
+        }
+        
+        #nav-content ul {
+            padding: 0;
+            list-style: none;
+        }
+    </style>
+</head>
+<body style="background-image: url('{% static 'bg2.AVIF' %}');">
+    <div id="nav-container">
+        <div class="bg"></div>
+        <div class="button" tabindex="0">
+            <span class="icon-bar"></span>
+            <span class="icon-bar"></span>
+            <span class="icon-bar"></span>
+        </div>
+        <div id="nav-content" tabindex="0">
+            <ul>
+                <li><a href="{% url 'admin_dashboard' %}">Back</a></li>
+                <li><a href="{% url 'profile' %}">Profile</a></li>
+                <li><a href="{% url 'login' %}">Log Out</a></li>
+            </ul>
+        </div>
+    </div>
+    <header>
+        <div class="head">
+            <h2><span class="yellow">SGS</span> CAT SHELTER</h2>
+        </div>
+    </header>
+    <div class="container2">
+        <h1>Cat List</h1>
+        <br>
+        {% for cat in cats %}
+        <div class="cat-box">
+            <h2 class="cat-name">{{ cat.name }}</h2>
+            <!--<p class="cat-details"><strong>Age:</strong> {{ cat.age }}</p>
+            <p class="cat-details"><strong>Breed:</strong> {{ cat.breed }}</p>
+            <p class="cat-details"><strong>Description:</strong> {{ cat.description }}</p>
+             You can add more details or images here if needed -->
+            <a href="{% url 'admin_catdetail' cat.id %}" class="button-link">View Details</a>
+        </div>
+        {% endfor %}
+        <a href="{% url 'add_cat' %}" class="button-link">Add New Cat</a>
+        <a href="{% url 'admin_dashboard' %}" class="button-link">Back</a>
+    </div>
+</body>
+</html>

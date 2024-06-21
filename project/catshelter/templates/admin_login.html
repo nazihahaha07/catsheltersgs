@@ -1,0 +1,164 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Admin Login</title>
+    <style>
+        @import url('https://fonts.googleapis.com/css?family=Belleza');
+        @import url('https://fonts.googleapis.com/css?family=Inter');
+        body {
+            background-color: #B99976;
+            color: white;
+        }
+
+        .login-box {
+            width: 40%;
+            height: 400px;
+            background-color: rgb(255, 255, 255);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            position: absolute;
+            left: 30%;
+            top: 15%;
+            box-shadow: rgba(0, 0, 0, 0.263) -5px 10px 20px 10px;
+            z-index: -1;
+        }
+
+        .left-side {
+            position: relative;
+            width: 50%;
+            height: 100%;
+            left: 7%;
+            padding-top: 25%;
+        }
+
+        .left-side a {
+            position: relative;
+            left: 20px;
+        }
+
+        .logo {
+            width: 190px;
+            background-color: #B99976;
+            font-family: 'Inter';
+            font-weight: lighter;
+            margin-bottom: 40px;
+            margin-left: 50px;
+            font-size: 14px;
+        }
+
+        .yellow {
+            color: #FFD006;
+        }
+
+        label {
+            display: block;
+            margin-bottom: 2px;
+            font-weight: bold;
+        }
+
+        input[type="text"],
+        input[type="password"] {
+            width: 90%;
+            height: 30px;
+            padding: 10px;
+            border: 1px solid rgb(211, 211, 211);
+            border-radius: 5px;
+            margin-bottom: 10px;
+            font-family: 'Poppins', sans-serif;
+        }
+
+        button[type="submit"] {
+            background-color: #004AAD;
+            color: white;
+            font-family: 'Poppins', sans-serif;
+            font-size: 16px;
+            font-weight: 600;
+            width: 96%;
+            height: 45px;
+            padding: 10px 20px;
+            border: none;
+            border-radius: 5px;
+            cursor: pointer;
+            transition: background-color 200ms ease-in-out, transform 200ms ease-in-out;
+        }
+
+        button[type="submit"]:hover {
+            background-color: #FFD006;
+            color: #004AAD;
+            transform: scale(1.05);
+        }
+
+        button[type="submit"]:active {
+            transform: scale(1);
+            background-color: #003080;
+            color: white;
+        }
+
+        @media screen and (max-width: 600px) {
+            .login-box {
+                max-width: 300px;
+            }
+        }
+
+        .btn-login {
+            width: 90%;
+            height: 45px;
+            position: relative;
+            left: 30%;
+        }
+
+        .right-side {
+            width: 300px;
+            height: 100%;
+            position: relative;
+            right: -135px;
+        }
+
+        .right-side img {
+            width: 338px;
+            height: 400px;
+            position: absolute;
+            right: 0;
+            top: 0;
+        }
+
+        a {
+            font-family: 'Poppins', sans-serif;
+            font-size: 14px;
+            margin-left: 50px;
+        }
+
+    </style>
+</head>
+<body>
+    <div class="login-box">
+        <div class="left-side">
+            <div class="logo">
+                <h2><span class="yellow">SGS</span> CAT SHELTER</h2>
+            </div>
+            <form method="post">
+                {% csrf_token %}
+                <div class="form-group">
+                    <label for="admin_id"></label>
+                    <input type="text" id="admin_id" name="admin_id" placeholder="Admin ID" required >
+                </div>
+                <div class="form-group">
+                    <label for="password"></label>
+                    <input type="password" id="password" name="password" placeholder="Password" required >
+                </div>
+                <br>
+                <br>
+                <div class="form-group">
+                    <button style="font-family: 'Poppins', sans-serif; font-size: 16px; font-weight: 600;" type="submit" value="Login">Login</button>
+                </div>
+            </form>
+        </div>
+        <div class="right-side">
+            {% load static %} <img src="{% static 'catss.jpg' %}" width="60px" height="60px"/>
+        </div>
+    </div>
+</body>
+</html>
