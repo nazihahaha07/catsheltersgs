@@ -93,6 +93,9 @@
             <p class="cat-details"><strong>Age:</strong> {{ cat.age }}</p>
             <p class="cat-details"><strong>Breed:</strong> {{ cat.breed }}</p>
             <p class="cat-details"><strong>Description:</strong> {{ cat.description }}</p>
+            <p class="cat-details"><strong>Gender:</strong> {{ cat.get_gender_display }}</p>
+            <p class="cat-details"><strong>Neutered:</strong> {{ cat.neuter|yesno:"Yes,No" }}</p>
+            <p class="cat-details"><strong>Health Condition:</strong> {{ cat.get_health_condition_display }}</p>
         </div>
         <a href="{% url 'cat_list' %}" class="button-link">Back to Cat List</a>
         <a href="{% url 'report_cat' cat.id %}" class="button-link2">Report</a>

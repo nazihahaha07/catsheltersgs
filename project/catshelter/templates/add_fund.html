@@ -1,0 +1,115 @@
+{% load static %}
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Add New Fund</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.1.1/css/all.min.css" integrity="sha512-KyZXEAg3QhqLMpG8r+Knujsl5/5hb7x0lg0iO1rz5Dl5oI8m3UaW9b7U6K2B1ebdp1BxYXl+/KHrJTZzT8/y5w==" crossorigin="anonymous" referrerpolicy="no-referrer" />
+    <style>
+        body {
+            font-family: 'Inter', sans-serif;
+            background-image: url('{% static 'bg2.AVIF' %}');
+            margin: 0;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            color: #333;
+        }
+        .container {
+            margin-top:2%;
+            background: rgba(255, 255, 255, 0.95);
+            padding: 40px;
+            border-radius: 20px;
+            box-shadow: 0 15px 30px rgba(0, 0, 0, 0.1);
+            text-align: center;
+            width: 100%;
+            max-width: 600px;
+            box-sizing: border-box;
+            height:125%;
+        }
+        h1 {
+            font-size: 32px;
+            color: #007bff;
+            margin-bottom: 20px;
+        }
+        .fund-form {
+            display: flex;
+            flex-direction: column;
+            gap: 20px;
+        }
+        .fund-form label {
+            font-weight: bold;
+            font-size: 18px;
+            text-align: left;
+            margin-bottom: 5px;
+        }
+        .fund-form input[type="text"],
+        .fund-form input[type="number"],
+        .fund-form input[type="decimal"],
+        .fund-form textarea {
+            padding: 15px;
+            border: 1px solid #ccc;
+            border-radius: 10px;
+            font-size: 16px;
+            width: 100%;
+            box-sizing: border-box;
+            transition: border-color 0.3s ease;
+        }
+        .fund-form input[type="text"]:focus,
+        .fund-form input[type="number"]:focus,
+        .fund-form input[type="decimal"]:focus,
+        .fund-form textarea:focus {
+            border-color: #007bff;
+        }
+        .fund-form input[type="submit"] {
+            padding: 15px;
+            background-color: #007bff;
+            color: #fff;
+            border: none;
+            border-radius: 12px;
+            cursor: pointer;
+            font-family: 'Inter', sans-serif;
+            font-size: 18px;
+            font-weight: 600;
+            transition: background-color 0.3s ease, transform 0.2s ease;
+            box-shadow: 0 4px 8px rgba(0, 123, 255, 0.2);
+        }
+        .fund-form input[type="submit"]:hover {
+            background-color: #0056b3;
+            transform: scale(1.05);
+        }
+        .button-link {
+            display: inline-block;
+            padding: 12px 24px;
+            background-color: #007bff;
+            color: #fff;
+            text-align: center;
+            text-decoration: none;
+            border-radius: 12px;
+            cursor: pointer;
+            font-family: 'Inter', sans-serif;
+            font-size: 16px;
+            font-weight: 600;
+            transition: background-color 0.3s ease, transform 0.2s ease;
+            margin-top: 10px;
+            box-shadow: 0 4px 8px rgba(0, 123, 255, 0.2);
+        }
+        .button-link:hover {
+            background-color: #0056b3;
+            transform: scale(1.05);
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <h1><i class="fa fa-plus-circle"></i> Add New Fund</h1>
+        <form method="post" class="fund-form">
+            {% csrf_token %}
+            {{ form.as_p }}
+            <input type="submit" value="Add Fund">
+        </form>
+        <a href="{% url 'admin_fund' %}" class="button-link"><i class="fa fa-arrow-left"></i> Back to Fund List</a>
+    </div>
+    <br>
+</body>
+</html>

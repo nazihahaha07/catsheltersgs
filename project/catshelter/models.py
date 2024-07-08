@@ -13,11 +13,27 @@ class Login(models.Model):
     user = models.ForeignKey(User, on_delete=models.CASCADE)
 
 class Cat(models.Model):
+    GENDER_CHOICES = [
+        ('M', 'Male'),
+        ('F', 'Female'),
+    ]
+
+    HEALTH_CHOICES = [
+        ('Healthy', 'Healthy'),
+        ('Sick', 'Sick'),
+    ]
+
     name = models.CharField(max_length=100)
     age = models.IntegerField()
     breed = models.CharField(max_length=100)
     description = models.TextField()
-    image = models.ImageField(upload_to='cat_images/', null=True, blank=True)  # Add this field
+    image = models.ImageField(upload_to='cat_images/', null=True, blank=True)
+    gender = models.CharField(max_length=1, choices=GENDER_CHOICES, default='M')
+    neuter = models.BooleanField(default=False)
+    health_condition = models.CharField(max_length=50, choices=HEALTH_CHOICES, default='Healthy')
+
+    def __str__(self):
+        return self.name  # Add this field
 
 class Image(models.Model):
     title = models.CharField(max_length=255)
@@ -25,14 +41,17 @@ class Image(models.Model):
     cat = models.ForeignKey(Cat, on_delete=models.CASCADE, related_name='images', null=True, blank=True)
 
 class Admin(models.Model):
-    admin_id = models.CharField(max_length=50, unique=True)
     admin_name = models.CharField(max_length=100)
     admin_contact = models.CharField(max_length=15)
     admin_email = models.EmailField(unique=True)
 
+    def __str__(self):
+        return self.admin_name
+
 class AdminLogin(models.Model):
-    admin = models.OneToOneField(Admin, on_delete=models.CASCADE, primary_key=True)
+    login_id = models.CharField(max_length=50, unique=True)
     password = models.CharField(max_length=225)
+    admin = models.ForeignKey(Admin, on_delete=models.CASCADE)
 
     def __str__(self):
         return self.admin.admin_name
@@ -70,3 +89,10 @@ class Inventory(models.Model):
     def __str__(self):
         return self.item_name
 
+class Fund(models.Model):
+    fund_name = models.CharField(max_length=100)
+    description = models.TextField()
+    price = models.DecimalField(max_digits=10, decimal_places=2)
+
+    def __str__(self):
+        return self.item_name

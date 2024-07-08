@@ -1,6 +1,6 @@
 from django.shortcuts import render,redirect,get_object_or_404
-from catshelter.models import User,Login,Cat,Image,Admin,AdminLogin,Report,VolunteerDate,VolunteerApplication,Inventory
-from .forms import ImageForm,CatForm,ReportForm,VolunteerDateForm,VolunteerApplicationForm,UpdateInventoryForm,InventoryForm
+from catshelter.models import User,Login,Cat,Image,Admin,AdminLogin,Report,VolunteerDate,VolunteerApplication,Inventory,Fund
+from .forms import ImageForm,CatForm,ReportForm,VolunteerDateForm,VolunteerApplicationForm,UpdateInventoryForm,InventoryForm,FundForm,UpdateFundForm
 from django.contrib import messages
 from django.db import IntegrityError
 from django.contrib.auth.hashers import make_password, check_password
@@ -149,44 +149,45 @@ def about_us(request):
 
 def admin_login_view(request):
     if request.method == 'POST':
-        admin_id = request.POST.get('admin_id')
+        login_id = request.POST.get('admin_id')
         password = request.POST.get('password')
 
         try:
-            admin_login = AdminLogin.objects.get(admin__admin_id=admin_id)
-            if admin_login and check_password(password, admin_login.password):
-                admin = admin_login.admin
-                user = authenticate(request, username=admin.admin_name, password=password)
-                if user is not None:
-                    auth_login(request, user)
-                    return redirect('admin_dashboard')  # Redirect to the admin dashboard URL name
-                else:
-                    messages.error(request, 'Authentication failed.')
+            admin_login = AdminLogin.objects.get(login_id=login_id)
+            if check_password(password, admin_login.password):
+                request.session['admin_name'] = admin_login.admin.admin_name
+                messages.success(request, 'Login successful')
+                return redirect('admin_dashboard')  # Redirect to the admin dashboard URL name
             else:
                 messages.error(request, 'Invalid admin ID or password.')
         except AdminLogin.DoesNotExist:
             messages.error(request, 'Admin ID does not exist.')
 
-    return render(request, 'admin_dashboard.html')
+    return render(request, 'admin_login.html')
 
 # Other views for signup, logout, and dashboard remain the same
 def admin_signup_view(request):
     if request.method == 'POST':
-        admin_id = request.POST.get('admin_id')
         admin_name = request.POST.get('admin_name')
         admin_contact = request.POST.get('admin_contact')
         admin_email = request.POST.get('admin_email')
+        login_id = request.POST.get('admin_id')
         password = request.POST.get('password')
 
         try:
-            admin = Admin(admin_id=admin_id, admin_name=admin_name, admin_contact=admin_contact, admin_email=admin_email)
+            admin = Admin(admin_name=admin_name, admin_contact=admin_contact, admin_email=admin_email)
             admin.save()
-            admin_login = AdminLogin(admin=admin, password=make_password(password))
+
+            hashed_password = make_password(password)
+            admin_login = AdminLogin(login_id=login_id, password=hashed_password, admin=admin)
             admin_login.save()
+
+            request.session['admin_name'] = admin_name
+
             messages.success(request, 'Admin account created successfully')
             return redirect('admin_login')
         except IntegrityError:
-            messages.error(request, 'Admin ID or Email already exists')
+            messages.error(request, 'Admin ID or Email already exists.')
 
     return render(request, 'admin_signup.html')
 
@@ -329,3 +330,35 @@ def delete_report(request, id):
     report = get_object_or_404(Report, id=id)
     report.delete()
     return redirect('admin_report')
+
+def admin_fund_view(request):
+    funds = Fund.objects.all()
+    return render(request, 'admin_fund.html', {'funds': funds})
+
+def add_fund(request):
+    if request.method == 'POST':
+        form = FundForm(request.POST)
+        if form.is_valid():
+            form.save()
+            return redirect('admin_fund')
+    else:
+        form = FundForm()
+    return render(request, 'add_fund.html', {'form': form})
+
+def update_fund(request, pk):
+    fund = get_object_or_404(Fund, pk=pk)
+    if request.method == 'POST':
+        form = UpdateFundForm(request.POST, instance=fund)
+        if form.is_valid():
+            form.save()
+            return redirect('admin_fund')
+    else:
+        form = UpdateFundForm(instance=fund)
+    return render(request, 'update_fund.html', {'form': form})
+
+def delete_fund(request, pk):
+    fund = get_object_or_404(Fund, pk=pk)
+    if request.method == 'POST':
+        fund.delete()
+        return redirect('admin_fund')
+    return render(request, 'delete_fund.html', {'fund': fund})

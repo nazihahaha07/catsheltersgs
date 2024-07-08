@@ -106,6 +106,9 @@
             <p class="cat-details"><strong>Age:</strong> {{ cat.age }}</p>
             <p class="cat-details"><strong>Breed:</strong> {{ cat.breed }}</p>
             <p class="cat-details"><strong>Description:</strong> {{ cat.description }}</p>
+            <p class="cat-details"><strong>Gender:</strong> {{ cat.get_gender_display }}</p>
+            <p class="cat-details"><strong>Neutered:</strong> {{ cat.neuter|yesno:"Yes,No" }}</p>
+            <p class="cat-details"><strong>Health Condition:</strong> {{ cat.get_health_condition_display }}</p>
         </div>
         <div class="action-buttons">
             <a href="{% url 'admin_cat_update' cat.id %}" class="button-link button-update">Update Cat</a>

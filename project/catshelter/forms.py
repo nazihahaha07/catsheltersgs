@@ -1,10 +1,10 @@
 from django import forms
-from .models import Image,Cat,Report,VolunteerDate,VolunteerApplication,Inventory
+from .models import Image,Cat,Report,VolunteerDate,VolunteerApplication,Inventory,Fund
 
 class CatForm(forms.ModelForm):
     class Meta:
         model = Cat
-        fields = ['name', 'age', 'breed', 'description', 'image']
+        fields = ['name', 'age', 'breed', 'description', 'image', 'gender', 'neuter', 'health_condition']
 
 class ImageForm(forms.ModelForm):
     class Meta:
@@ -48,3 +48,13 @@ class UpdateInventoryForm(forms.ModelForm):
     class Meta:
         model = Inventory
         fields = ['item_name', 'description', 'quantity', 'price']
+
+class FundForm(forms.ModelForm):
+    class Meta:
+        model = Fund
+        fields = ['fund_name', 'description', 'price']
+
+class UpdateFundForm(forms.ModelForm):
+    class Meta:
+        model = Fund
+        fields = ['fund_name', 'description','price']
