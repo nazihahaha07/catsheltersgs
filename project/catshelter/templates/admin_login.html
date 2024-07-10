@@ -44,7 +44,7 @@
             background-color: #B99976;
             font-family: 'Inter';
             font-weight: lighter;
-            margin-bottom: 40px;
+            margin-bottom: 20px;
             margin-left: 50px;
             font-size: 14px;
         }
@@ -66,7 +66,7 @@
             padding: 10px;
             border: 1px solid rgb(211, 211, 211);
             border-radius: 5px;
-            margin-bottom: 10px;
+            margin-bottom: 5px;
             font-family: 'Poppins', sans-serif;
         }
 
@@ -139,15 +139,15 @@
             <div class="logo">
                 <h2><span class="yellow">SGS</span> CAT SHELTER</h2>
             </div>
-            <form method="post">
+            <form method="post" >
                 {% csrf_token %}
                 <div class="form-group">
-                    <label for="admin_id"></label>
-                    <input type="text" id="admin_id" name="admin_id" placeholder="Admin ID" required >
+                    <label for="username">Admin Username</label>
+                    <input type="text" id="username" name="username" placeholder="Admin Username" required>
                 </div>
                 <div class="form-group">
-                    <label for="password"></label>
-                    <input type="password" id="password" name="password" placeholder="Password" required >
+                    <label for="password">Password</label>
+                    <input type="password" id="password" name="password" placeholder="Password" required>
                 </div>
                 <br>
                 <br>

@@ -1,5 +1,5 @@
 from django.shortcuts import render,redirect,get_object_or_404
-from catshelter.models import User,Login,Cat,Image,Admin,AdminLogin,Report,VolunteerDate,VolunteerApplication,Inventory,Fund
+from catshelter.models import User,Login,Cat,Image,Report,VolunteerDate,VolunteerApplication,Inventory,Fund,Admin,AdminLogin
 from .forms import ImageForm,CatForm,ReportForm,VolunteerDateForm,VolunteerApplicationForm,UpdateInventoryForm,InventoryForm,FundForm,UpdateFundForm
 from django.contrib import messages
 from django.db import IntegrityError
@@ -147,54 +147,63 @@ def home(request):
 def about_us(request):
     return render(request, 'about_us.html')
 
-def admin_login_view(request):
+def signup_admin(request):
     if request.method == 'POST':
-        login_id = request.POST.get('admin_id')
+        adminfullname = request.POST.get('adminfullname')
+        adminemail = request.POST.get('adminemail')
+        adminphone = request.POST.get('adminphone')
+        username = request.POST.get('username')
         password = request.POST.get('password')
 
-        try:
-            admin_login = AdminLogin.objects.get(login_id=login_id)
-            if check_password(password, admin_login.password):
-                request.session['admin_name'] = admin_login.admin.admin_name
-                messages.success(request, 'Login successful')
-                return redirect('admin_dashboard')  # Redirect to the admin dashboard URL name
-            else:
-                messages.error(request, 'Invalid admin ID or password.')
-        except AdminLogin.DoesNotExist:
-            messages.error(request, 'Admin ID does not exist.')
+        print(f"Signup details: {adminfullname}, {adminemail}, {adminphone}, {username}, {password}")
 
-    return render(request, 'admin_login.html')
+        admin = Admin(adminfullname=adminfullname, adminemail=adminemail, adminphone=adminphone)
+        admin.save()
 
-# Other views for signup, logout, and dashboard remain the same
-def admin_signup_view(request):
-    if request.method == 'POST':
-        admin_name = request.POST.get('admin_name')
-        admin_contact = request.POST.get('admin_contact')
-        admin_email = request.POST.get('admin_email')
-        login_id = request.POST.get('admin_id')
-        password = request.POST.get('password')
+        hashed_password = make_password(password)
+        print(f"Hashed password: {hashed_password}")
+        
+        admin_login = AdminLogin(username=username, password=hashed_password, admin=admin)
+        admin_login.save()
 
-        try:
-            admin = Admin(admin_name=admin_name, admin_contact=admin_contact, admin_email=admin_email)
-            admin.save()
+        request.session['admin_fullname'] = adminfullname
 
-            hashed_password = make_password(password)
-            admin_login = AdminLogin(login_id=login_id, password=hashed_password, admin=admin)
-            admin_login.save()
-
-            request.session['admin_name'] = admin_name
-
-            messages.success(request, 'Admin account created successfully')
-            return redirect('admin_login')
-        except IntegrityError:
-            messages.error(request, 'Admin ID or Email already exists.')
+        return redirect('admin_login')
 
     return render(request, 'admin_signup.html')
 
+def login_admin(request):
+    if request.method == 'POST':
+        username = request.POST.get('username')
+        password = request.POST.get('password')
+        print(f"Received username: {username}, password: {password}")
+
+        try:
+            admin_login_instance = AdminLogin.objects.get(username=username)
+            print(f"AdminLogin instance found: {admin_login_instance}")
+            
+            if check_password(password, admin_login_instance.password):
+                print("Password matched")
+                request.session['admin_fullname'] = admin_login_instance.admin.adminfullname
+                return redirect('admin_dashboard')
+            else:
+                print("Password did not match")
+                messages.error(request, 'Password did not match')
+        except AdminLogin.DoesNotExist:
+            print("Admin with this username does not exist")
+            messages.error(request, 'Admin with this username does not exist')
+
+    alldata = AdminLogin.objects.all()
+    context = {
+        'alldata': alldata
+    }
+    return render(request, 'admin_login.html', context)
+
 def admin_dashboard_view(request):
-    if not request.user.is_authenticated:
+    if 'admin_fullname' not in request.session:
         return redirect('admin_login')
-    return render(request, 'admin_dashboard.html')
+    admin_fullname = request.session['admin_fullname']
+    return render(request, 'admin_dashboard.html', {'admin_fullname': admin_fullname})
 
 def admin_catlist(request):
     cats = Cat.objects.all()

@@ -44,7 +44,7 @@
             background-color: #B99976;
             font-family: 'Inter';
             font-weight: lighter;
-            margin-bottom: 40px;
+            margin-bottom: 20px;
             margin-left: 50px;
             font-size: 14px;
         }
@@ -67,8 +67,9 @@
             padding: 10px;
             border: 1px solid rgb(211, 211, 211);
             border-radius: 5px;
-            margin-bottom: 10px;
+            margin-bottom: 2px;
             font-family: 'Poppins', sans-serif;
+            margin-top: -2px;
         }
 
         button[type="submit"] {
@@ -143,26 +144,25 @@
             <form method="post">
                 {% csrf_token %}
                 <div class="form-group">
-                    <label for="admin_id"></label>
-                    <input type="text" id="admin_id" name="admin_id" placeholder="Admin ID" required >
+                    <label for="adminfullname">Full Name</label>
+                    <input type="text" id="adminfullname" name="adminfullname" placeholder="Name" required>
                 </div>
                 <div class="form-group">
-                    <label for="admin_name"></label>
-                    <input type="text" id="admin_name" name="admin_name" placeholder="Admin Name" required >
+                    <label for="adminemail">Email</label>
+                    <input type="text" id="adminemail" name="adminemail" placeholder="Email" required>
                 </div>
                 <div class="form-group">
-                    <label for="admin_contact"></label>
-                    <input type="text" id="admin_contact" name="admin_contact" placeholder="Admin Contact" required >
+                    <label for="adminphone">Phone</label>
+                    <input type="text" id="adminphone" name="adminphone" placeholder="Phone" required>
                 </div>
                 <div class="form-group">
-                    <label for="admin_email"></label>
-                    <input type="email" id="admin_email" name="admin_email" placeholder="Admin Email" required >
+                    <label for="username">Admin Username</label>
+                    <input type="text" id="username" name="username" placeholder="Admin Username" required>
                 </div>
                 <div class="form-group">
-                    <label for="password"></label>
-                    <input type="password" id="password" name="password" placeholder="Password" required >
+                    <label for="password">Password</label>
+                    <input type="password" id="password" name="password" placeholder="Password" required>
                 </div>
-                    <br>
                     <br>
                     <div class="form-group">
                         <button style="font-family: 'Poppins', sans-serif; font-size: 16px; font-weight: 600;" type="submit" value="Sign_Up">Sign Up</button>

@@ -1,4 +1,5 @@
 from django.db import models
+from django.contrib.auth.hashers import make_password
 # Create your models here.
 
 class User(models.Model):
@@ -7,10 +8,21 @@ class User(models.Model):
     userphone = models.IntegerField()
     status = models.CharField(max_length=225, default="Active")
 
+class Admin(models.Model):
+    adminfullname = models.CharField(max_length=225, primary_key=True)
+    adminemail = models.CharField(max_length=225)
+    adminphone = models.IntegerField()
+    status = models.CharField(max_length=225, default="Active")
+
 class Login(models.Model):
     username = models.CharField(max_length=225, primary_key=True)
     password = models.CharField(max_length=225)
     user = models.ForeignKey(User, on_delete=models.CASCADE)
+
+class AdminLogin(models.Model):
+    username = models.CharField(max_length=225, primary_key=True)
+    password = models.CharField(max_length=225)
+    admin = models.ForeignKey(Admin, on_delete=models.CASCADE)
 
 class Cat(models.Model):
     GENDER_CHOICES = [
@@ -40,22 +52,7 @@ class Image(models.Model):
     image = models.ImageField(upload_to='images/')
     cat = models.ForeignKey(Cat, on_delete=models.CASCADE, related_name='images', null=True, blank=True)
 
-class Admin(models.Model):
-    admin_name = models.CharField(max_length=100)
-    admin_contact = models.CharField(max_length=15)
-    admin_email = models.EmailField(unique=True)
 
-    def __str__(self):
-        return self.admin_name
-
-class AdminLogin(models.Model):
-    login_id = models.CharField(max_length=50, unique=True)
-    password = models.CharField(max_length=225)
-    admin = models.ForeignKey(Admin, on_delete=models.CASCADE)
-
-    def __str__(self):
-        return self.admin.admin_name
-    
 class Report(models.Model):
     cat = models.ForeignKey(Cat, on_delete=models.CASCADE)
     report_text = models.TextField()
